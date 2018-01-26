@@ -6,12 +6,18 @@ class CommentInput extends Component{
   //   comment: PropTypes.object.isRequired
   // }
   static propTypes = {
-    onSubmit : PropTypes.func
+    username : PropTypes.any,
+    onSubmit : PropTypes.func,
+    onUserNameInputBlur : PropTypes.func
+
   }
-    constructor(){
-        super();
+  static defaultProps = {
+    username:''
+  }
+    constructor(props){
+        super(props);
         this.state ={
-            username: '',
+            username: props.username,
             content: ''
         }
     }
@@ -49,16 +55,15 @@ class CommentInput extends Component{
             username:this.state.username,
             content: this.state.content,
             createdTime: +new Date()
-
           })
-          // const { username, content } = this.state
-          // this.props.onSubmit({username, content})
         }
         this.setState({ content: '' });
       }
      
       handleUsernameBlur(event){
-        this._saveUsername(event.target.value);
+       if(this.props.onUserNameInputBlur){
+         this.propr.onUserNameInputBlur(event.target.value)
+       }
       }
     render(){
         return(
